@@ -1,0 +1,137 @@
+-- object : employee
+-- object : department
+
+select 
+  employee_id,
+  first_name,
+  last_name,
+  email,
+  salary,
+  department_id
+from employees;
+-- many to one
+select * from employees;
+-- one to many
+select * from departments;
+
+-- INNER join
+select 
+  emp.first_name as nama_depan,
+  emp.last_name as nama_belakang,
+  emp.email as email,
+  dept.DEPARTMENT_ID,
+  dept.DEPARTMENT_NAME as nama_departemen
+from 
+      employees emp --left
+inner join  
+      departments dept --right
+on 
+  emp.department_id = dept.department_id;
+
+-- OUTER JOIN
+-- LEFT
+select 
+  emp.first_name as nama_depan,
+  emp.last_name as nama_belakang,
+  emp.email as email,
+  dept.DEPARTMENT_ID,
+  dept.DEPARTMENT_NAME as nama_departemen
+from 
+      employees emp --left
+left join  
+      departments dept --right
+on 
+  emp.department_id = dept.department_id;
+
+-- RIGHT OUTER JOIN
+select 
+  emp.first_name as nama_depan,
+  emp.last_name as nama_belakang,
+  emp.email as email,
+  dept.DEPARTMENT_ID,
+  dept.DEPARTMENT_NAME as nama_departemen
+from 
+      employees emp --left
+right join  
+      departments dept --right
+on 
+  emp.department_id = dept.department_id;
+  
+-- MULTIPLE JOIN TABLE
+select 
+  employee_id,
+  first_name,
+  last_name,
+  email,
+  salary,
+  department_id
+from employees;
+-- many to one
+select * from employees;
+-- one to many
+select * from departments;
+
+-- INNER join
+select 
+  emp.first_name as nama_depan,
+  emp.last_name as nama_belakang,
+  emp.email as email,
+  emp.MANAGER_ID,
+  mng.FIRST_NAME as nama_menejer,
+  dept.DEPARTMENT_ID,
+  dept.DEPARTMENT_NAME as nama_departemen,
+  loc.CITY as kota
+from 
+      employees emp --left
+inner join  
+      departments dept --right
+on emp.department_id = dept.department_id
+inner join
+      locations loc
+on dept.LOCATION_ID = loc.LOCATION_ID
+inner join 
+    employees mng
+on emp.MANAGER_ID = mng.EMPLOYEE_ID;
+
+-- SINGLE FUNCTION
+SELECT 'hello oracle sql' from dual;
+select 
+  'HALLO ORACLE',
+  first_name,
+  salary,
+  salary*2 as bonus,
+  current_date as hari_ini,
+  concat(first_name, last_name) as nama_lengkap,
+  upper(first_name),
+  lower(last_name)
+from employees;
+
+-- AGREGATE GROUP FUNCTION
+-- 1. max
+-- 2. min
+-- 3. sum
+-- 4. avg
+-- 5. count
+
+select 
+  max(salary), 
+  min(salary), 
+  sum(salary), 
+  count(*),  
+  round(avg(salary),2)
+from employees;
+
+select * from employees where salary = 24000;
+select * from employees where salary = 2100;
+
+-- GROUP BY
+select 
+  job_id,
+  max(salary), 
+  min(salary), 
+  sum(salary), 
+  count(*),  
+  round(avg(salary),2)
+from employees
+group by job_id
+having max(salary) >= 10000
