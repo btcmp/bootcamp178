@@ -134,4 +134,49 @@ select
   round(avg(salary),2)
 from employees
 group by job_id
-having max(salary) >= 10000
+having max(salary) >= 10000;
+
+-- SEARCHING / SELECTING
+-- CONDITION
+-- EQUAL
+SELECT * from employees where upper(last_name)=upper('king');
+-- LIKE
+select * from employees where last_name like 'St%';
+select * from employees where upper(last_name) like upper('%st%');
+-- IN
+select * from employees where employee_id = 103 
+  or employee_id = 105
+  or employee_id = 107
+  
+select * from employees where employee_id in (103,105,107);
+
+-- SUBQUERY
+select * from employees where salary < (select avg(salary) from employees);
+
+-- order by
+select * from employees order by email asc;
+select * from employees order by email desc;
+
+-- example
+select 
+  emp.FIRST_NAME,
+  emp.salary,
+  dept.department_name
+from employees emp
+join departments dept
+on emp.department_id = dept.DEPARTMENT_ID
+
+select 
+  dept.department_name,
+  max(emp.salary) as terbesar,
+  min(emp.salary),
+  round(avg(emp.salary),2)
+from employees emp
+join departments dept
+on emp.department_id = dept.DEPARTMENT_ID 
+where dept.department_name <> 'Sales'
+group by dept.department_name
+having round(avg(emp.salary)) > 6000
+order by terbesar;
+
+-- DDL (Data Definition Language)
